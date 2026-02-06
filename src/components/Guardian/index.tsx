@@ -65,7 +65,7 @@ export default function Guardian() {
   const [intercomText, setIntercomText] = useState('');
   
   // Settings State
-  const [currentMode, setCurrentMode] = useState<'child' | 'senior'>('child');
+  const [currentMode, setCurrentMode] = useState<'trading'>('trading');
   const [currentRole, setCurrentRole] = useState('companion');
   const [currentPersonality, setCurrentPersonality] = useState('enfj');
   const [vadAutoCalibrate, setVadAutoCalibrate] = useState(true);
@@ -203,7 +203,7 @@ export default function Guardian() {
   };
 
   const updateSettings = (updates: Partial<{
-    mode: 'child' | 'senior';
+    mode: 'trading';
     roleId: string;
     personalityId: string;
     vadAutoCalibrate: boolean;
@@ -422,16 +422,10 @@ export default function Guardian() {
                <h3>User Mode</h3>
               <div className="switch-toggle">
                 <button 
-                  className={currentMode === 'child' ? 'active' : ''}
-                  onClick={() => updateSettings({ mode: 'child' })}
+                  className={currentMode === 'trading' ? 'active' : 'active'}
+                  onClick={() => updateSettings({ mode: 'trading' })}
                 >
-                   👶 Child
-                </button>
-                <button 
-                  className={currentMode === 'senior' ? 'active' : ''}
-                  onClick={() => updateSettings({ mode: 'senior' })}
-                >
-                  👴 Senior
+                  Trading
                 </button>
               </div>
             </div>
