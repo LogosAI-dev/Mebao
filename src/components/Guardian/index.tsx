@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { 
   Calendar, 
@@ -74,6 +74,7 @@ export default function Guardian() {
 
   const [isDollOnline, setIsDollOnline] = useState(false);
   const [socketRef, setSocketRef] = useState<Socket | null>(null);
+  const initialCheckPerformed = useRef<string | null>(null); // Track which date was auto-checked
 
   const getDeviceId = useCallback(() => {
     let id = localStorage.getItem('guardian_device_id');
@@ -119,14 +120,13 @@ export default function Guardian() {
     };
   }, [getDeviceId]);
 
-  const fetchSummary = useCallback(async (force: boolean = false) => {
+  const fetchSummary = useCallback(async (mode?: 'force' | 'check') => {
     if (!deviceId) return;
     setIsLoadingSummary(true);
     try {
       let url = `${BACKEND_URL}/api/guardian/summary?deviceId=${deviceId}&date=${selectedDate}&mode=${currentMode}`;
-      if (force) {
-        url += '&force=true';
-      }
+      if (mode === 'force') url += '&force=true';
+      if (mode === 'check') url += '&checkUpdate=true';
       
       const res = await fetch(url, {
         headers: {
@@ -157,7 +157,23 @@ export default function Guardian() {
       if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 
       const data = await res.json();
-      setHistory([...(data.messages || [])].reverse());
+      const rawMessages = data.messages || [];
+      const processed: ChatMessage[] = [];
+      for (let i = 0; i < rawMessages.length; i += 2) {
+        if (i + 1 < rawMessages.length) {
+          const m1 = rawMessages[i];
+          const m2 = rawMessages[i+1];
+          // If the pair is (AI/Guardian, User), swap them to (User, AI/Guardian)
+          if (m1.role !== 'user' && m2.role === 'user') {
+            processed.push(m2, m1);
+          } else {
+            processed.push(m1, m2);
+          }
+        } else {
+          processed.push(rawMessages[i]);
+        }
+      }
+      setHistory(processed);
     } catch (err) {
       console.error('Failed to fetch history:', err);
     }
@@ -184,11 +200,20 @@ export default function Guardian() {
 
   useEffect(() => {
     if (deviceId) {
-      if (activeTab === 'summary') fetchSummary();
+      // 1. Fetch from DB on mount or date change (No auto-regeneration)
+      if (initialCheckPerformed.current !== selectedDate) {
+        fetchSummary(); 
+        initialCheckPerformed.current = selectedDate;
+      } 
+      // 2. Simple fetch if data is missing when switching tabs
+      else if (activeTab === 'summary' && !summary) {
+        fetchSummary();
+      }
+
       if (activeTab === 'history') fetchHistory();
       fetchAlerts();
     }
-  }, [deviceId, selectedDate, activeTab, fetchSummary, fetchHistory, fetchAlerts]);
+  }, [deviceId, selectedDate, activeTab, fetchSummary, fetchHistory, fetchAlerts, summary]);
 
   const sendIntercom = () => {
     if (!intercomText.trim() || !socketRef) return;
@@ -289,7 +314,7 @@ export default function Guardian() {
           <div className="tab-content summary-view">
             <div className="section-header">
                <h2>📊 Daily Tracking</h2>
-               <button className="refresh-icon-btn" onClick={() => fetchSummary(true)} disabled={isLoadingSummary}>
+               <button className="refresh-icon-btn" onClick={() => fetchSummary('force')} disabled={isLoadingSummary}>
                  <RefreshCw size={18} className={isLoadingSummary ? 'listening' : ''} />
                </button>
             </div>
