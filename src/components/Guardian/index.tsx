@@ -17,8 +17,8 @@ import {
 } from 'lucide-react';
 import './styles.css';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
-const API_KEY = import.meta.env.VITE_API_KEY || 'sk-dev-test-123';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 interface DailySummary {
   device_id: string;
@@ -236,8 +236,8 @@ export default function Guardian() {
         <div className="header-left">
            <ShieldAlert size={28} className="logo-icon" />
            <div className="header-titles">
-             <h1 className="app-title">Me宝守护</h1>
-             <span className="subtitle">远程监护中心</span>
+             <h1 className="app-title">MeBao Guardian</h1>
+             <span className="subtitle">Remote Monitoring Center</span>
            </div>
         </div>
         
@@ -249,7 +249,7 @@ export default function Guardian() {
             <div className="date-display">
               <Calendar size={16} />
               <span className="date-text">
-                {new Date(selectedDate).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
+                {new Date(selectedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </span>
               <input 
                 type="date" 
@@ -272,7 +272,7 @@ export default function Guardian() {
         <div className="header-right">
            <div className={`status-pill ${isDollOnline ? 'online' : 'offline'}`}>
             <span className="status-dot"></span>
-            {isDollOnline ? '设备在线' : '离线'}
+            {isDollOnline ? 'Device Online' : 'Offline'}
           </div>
         </div>
       </header>
@@ -280,7 +280,7 @@ export default function Guardian() {
       {alerts.length > 0 && (
         <div className="alerts-banner" onClick={() => setActiveTab('history')}>
           <ShieldAlert size={18} />
-          <span>发现 {alerts.length} 条新的安全提醒，点击查看详情</span>
+          <span>Found {alerts.length} new security alerts, click for details</span>
         </div>
       )}
 
@@ -288,7 +288,7 @@ export default function Guardian() {
         {activeTab === 'summary' && (
           <div className="tab-content summary-view">
             <div className="section-header">
-               <h2>📊 每日追踪</h2>
+               <h2>📊 Daily Tracking</h2>
                <button className="refresh-icon-btn" onClick={() => fetchSummary(true)} disabled={isLoadingSummary}>
                  <RefreshCw size={18} className={isLoadingSummary ? 'listening' : ''} />
                </button>
@@ -303,31 +303,31 @@ export default function Guardian() {
                     <div className="stat-icon"><MessageSquare size={24} /></div>
                     <div className="stat-info">
                       <span className="value">{summary.conversation_count}</span>
-                      <span className="label">今日对话</span>
+                       <span className="label">Conversations Today</span>
                     </div>
                   </div>
                   <div className={`stat-card ${summary.has_alerts ? 'red' : 'green'}`}>
                     <div className="stat-icon"><Activity size={24} /></div>
                     <div className="stat-info">
-                      <span className="value">{summary.has_alerts ? summary.alert_count : '安全'}</span>
-                      <span className="label">健康状态</span>
+                       <span className="value">{summary.has_alerts ? summary.alert_count : 'Secure'}</span>
+                      <span className="label">Health Status</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="summary-card">
-                  <h3>🎯 热门话题</h3>
+                   <h3>🎯 Top Topics</h3>
                   <div className="tags-cloud">
-                    {summary.top_topics?.map((topic, i) => (
+                     {summary.top_topics?.map((topic, i) => (
                       <span key={i} className="tag">#{topic}</span>
-                    )) || <span className="empty-text">无</span>}
+                    )) || <span className="empty-text">None</span>}
                   </div>
                 </div>
 
                 <div className="summary-card">
-                  <h3>📝 智能摘要</h3>
+                   <h3>📝 AI Summary</h3>
                   <div className="summary-text-block">
-                    <p className="mood-text">😊 <strong>情绪:</strong> {summary.mood_summary}</p>
+                     <p className="mood-text">😊 <strong>Mood:</strong> {summary.mood_summary}</p>
                     <div className="divider"></div>
                     <p className="summary-text">{summary.overall_summary}</p>
                   </div>
@@ -344,15 +344,15 @@ export default function Guardian() {
             <div className="intercom-panel">
               <div className="panel-header">
                 <Mic size={32} className="mic-icon" />
-                <h2>远程传话</h2>
-                <p>输入文字，Me宝会用它的声音说出来</p>
+                <h2>Remote Intercom</h2>
+                <p>Type text and MeBao will speak it out in its voice</p>
               </div>
 
               <div className="input-area">
                 <textarea
                   value={intercomText}
                   onChange={(e) => setIntercomText(e.target.value)}
-                  placeholder="说点什么吧..."
+                   placeholder="Type something..."
                   rows={4}
                 />
                 <button 
@@ -360,7 +360,7 @@ export default function Guardian() {
                   onClick={sendIntercom}
                   disabled={!intercomText.trim() || !isDollOnline}
                 >
-                  发送语音
+                   Send Voice
                 </button>
               </div>
             </div>
@@ -370,7 +370,7 @@ export default function Guardian() {
         {activeTab === 'history' && (
           <div className="tab-content history-view">
              <div className="section-header">
-               <h2>📜 对话时光机</h2>
+               <h2>📜 Conversation History</h2>
                <button className="refresh-icon-btn" onClick={fetchHistory} disabled={isLoadingHistory}>
                  <RefreshCw size={18} className={isLoadingHistory ? 'listening' : ''} />
                </button>
@@ -399,12 +399,12 @@ export default function Guardian() {
         {activeTab === 'settings' && (
           <div className="tab-content settings-view">
             <div className="settings-card">
-              <h3>身份设定</h3>
+               <h3>Identity Settings</h3>
               <div className="role-grid">
                 {[
-                  { id: 'explorer', name: '探险家', icon: '🔭' },
-                  { id: 'companion', name: '伙伴', icon: '🐻' },
-                  { id: 'guardian_angel', name: '天使', icon: '👼' }
+                   { id: 'explorer', name: 'Explorer', icon: '🔭' },
+                  { id: 'companion', name: 'Companion', icon: '🐻' },
+                  { id: 'guardian_angel', name: 'Angel', icon: '👼' }
                 ].map((role) => (
                   <button 
                     key={role.id}
@@ -419,25 +419,25 @@ export default function Guardian() {
             </div>
 
             <div className="settings-card">
-              <h3>用户模式</h3>
+               <h3>User Mode</h3>
               <div className="switch-toggle">
                 <button 
                   className={currentMode === 'child' ? 'active' : ''}
                   onClick={() => updateSettings({ mode: 'child' })}
                 >
-                  👶 儿童
+                   👶 Child
                 </button>
                 <button 
                   className={currentMode === 'senior' ? 'active' : ''}
                   onClick={() => updateSettings({ mode: 'senior' })}
                 >
-                  👴 长辈
+                  👴 Senior
                 </button>
               </div>
             </div>
 
             <div className="settings-card">
-              <h3>🎤 灵敏度</h3>
+               <h3>🎤 Sensitivity</h3>
               <input
                 type="range"
                 min="1"
@@ -452,21 +452,21 @@ export default function Guardian() {
       </main>
 
       <nav className="bottom-nav">
-        <button className={activeTab === 'summary' ? 'active' : ''} onClick={() => setActiveTab('summary')}>
+         <button className={activeTab === 'summary' ? 'active' : ''} onClick={() => setActiveTab('summary')}>
           <Activity size={24} />
-          <span>简报</span>
+          <span>Summary</span>
         </button>
         <button className={activeTab === 'intercom' ? 'active' : ''} onClick={() => setActiveTab('intercom')}>
           <Mic size={24} />
-          <span>对讲</span>
+          <span>Intercom</span>
         </button>
         <button className={activeTab === 'history' ? 'active' : ''} onClick={() => setActiveTab('history')}>
           <History size={24} />
-          <span>历史</span>
+          <span>History</span>
         </button>
         <button className={activeTab === 'settings' ? 'active' : ''} onClick={() => setActiveTab('settings')}>
           <Settings size={24} />
-          <span>设置</span>
+          <span>Settings</span>
         </button>
       </nav>
     </div>
