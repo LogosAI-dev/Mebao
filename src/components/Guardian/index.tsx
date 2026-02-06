@@ -157,7 +157,7 @@ export default function Guardian() {
       if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 
       const data = await res.json();
-      setHistory(data.messages || []);
+      setHistory([...(data.messages || [])].reverse());
     } catch (err) {
       console.error('Failed to fetch history:', err);
     }
