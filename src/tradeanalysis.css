@@ -1,0 +1,29 @@
+.tradeanalysis-page{padding:20px;max-width:1000px;margin:0 auto;color:#e6eef8;font-family:'Orbitron',sans-serif}
+.page-header h1{font-size:26px;margin:0}
+.subtitle{color:#94a3b8;margin-bottom:14px}
+.card{background:linear-gradient(180deg,#071127,#061021);padding:18px;border-radius:12px;margin-bottom:16px;border:1px solid rgba(255,255,255,0.04)}
+.overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.overview-line{color:#cbd5e1}
+.observations-row{display:flex;gap:12px}
+.obs-card{flex:1}
+.obs-card ul{margin:0;padding-left:18px}
+.teachable p{color:#cbd5e1}
+.one-action{background:linear-gradient(90deg,#0b1220,#071125);border-left:4px solid #bf00ff;padding:14px}
+.one-action p{margin:0;color:#fff;font-weight:700}
+.lessons-grid{display:flex;gap:12px}
+.lesson-card{flex:1;background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
+.learn-btn{background:#bf00ff;color:#fff;border:none;padding:8px 10px;border-radius:8px}
+.chart-placeholder{height:180px;border-radius:8px;background:linear-gradient(180deg,#051025,#08152a);display:flex;align-items:center;justify-content:space-around;color:#9ca3af}
+.marker{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:6px}
+.chart-note{font-size:12px;color:#9ca3af;margin-top:8px}
+.footer-disclaimer{font-size:12px;color:#9ca3af;text-align:center;margin-top:18px}
+
+.callout{background:linear-gradient(90deg,#0f1b2b,#07102a);border-left:4px solid #bf00ff;padding:12px;border-radius:8px}
+.overview-card h2{margin:0 0 8px}
+.overview-grid div{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
+
+@media (max-width:800px){
+  .overview-grid{grid-template-columns:repeat(2,1fr)}
+  .observations-row{flex-direction:column}
+  .lessons-grid{flex-direction:column}
+}
