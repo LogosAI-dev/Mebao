@@ -1,13 +1,29 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { INITIAL_ASSESSMENT } from './constant';
 import { useNavigate } from 'react-router-dom';
 import './OnboardingPage.css';
 
-const Onboarding = ({ profile, setProfile }) => {
+const Onboarding = ({ profile, setProfile, onEnter }) => {
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+  onEnter?.(); 
+  }, []);
+
+  const handleReset = () => {
+    localStorage.removeItem('mebao_profile');
+    setProfile({
+      name: '',
+      experience: 'Beginner',
+      instruments: [],
+      goal: '',
+      deviceId: '',
+      hasOnboarded: false
+    });
+    setStep(1);
+  };
 
   const handleProfileSubmit = (e) => {
     e.preventDefault();
@@ -29,11 +45,19 @@ const Onboarding = ({ profile, setProfile }) => {
   return (
     <div className="onboarding-page">
       <div className="onboarding-card glass-card">
+        <div className="progress-indicator">
+          <div className={`progress-step ${step >= 1 ? 'active' : ''}`}>1</div>
+          <div className="progress-line"></div>
+          <div className={`progress-step ${step >= 2 ? 'active' : ''}`}>2</div>
+        </div>
+        {step > 1 && (
+          <button className="reset-btn" onClick={handleReset} title="Start over">↺ Reset</button>
+        )}
         {step === 1 ? (
           <form onSubmit={handleProfileSubmit} className="onboarding-form">
             <header className="onboarding-header">
               <h1>Welcome to <span>MeBao</span></h1>
-              <p>Personalize your AI Trading Doll</p>
+              <p>Personalize your AI Trading Companion</p>
             </header>
 
             <div className="input-group">

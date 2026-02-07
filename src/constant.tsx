@@ -65,3 +65,30 @@ export const SUGGESTED_LESSONS = [
   { id: '2', title: 'Planning Trades with Intent', desc: 'Document entry, exit and the reasoning before entry.' },
   { id: '3', title: 'Managing Losses Emotionally', desc: 'Techniques to reduce emotional reactions after losses.' },
 ];
+
+export const LESSON_QUESTIONS = {
+  '1': [
+    { q: "Risk per trade should ideally be...", opts: ["10%", "50%", "1-2%", "All in"], ans: 2 },
+    { q: "A Stop Loss protects you from...", opts: ["Profit", "Unlimited Loss", "Taxes", "Winning"], ans: 1 },
+    { q: "Leverage increases...", opts: ["Profit only", "Risk only", "Both profit and risk", "Nothing"], ans: 2 },
+    { q: "Position sizing depends on...", opts: ["Account size", "Risk tolerance", "Mood", "Both"], ans: 3 },
+    { q: "Diversifying trades helps to...", opts: ["Increase risk", "Reduce risk", "Make gambling fun", "None"], ans: 1 }
+  ],
+
+  '2': [
+    { q: "Planning trades before entry helps to...", opts: ["Reduce emotions", "Win 100%", "Ignore news", "Random trades"], ans: 0 },
+    { q: "Documenting trades is important because...", opts: ["Memory is unreliable", "It looks fancy", "Teachers check", "Nothing"], ans: 0 },
+    { q: "A trading plan should include...", opts: ["Favorite colors", "Entry & exit points", "Mood swings", "None"], ans: 1 },
+    { q: "Following a plan helps prevent...", opts: ["Overtrading", "Boredom", "Taxes", "Sleep"], ans: 0 },
+    { q: "Reviewing past trades helps to...", opts: ["Forget everything", "Learn from Mistakes", "Celebrate losses", "None"], ans: 1 }
+  ],
+  
+  '3': [
+    { q: "After a loss, emotions can...", opts: ["Stay neutral", "Affect next trades", "Disappear magically", "None"], ans: 1 },
+    { q: "Journaling helps to...", opts: ["Track performance", "Ignore feelings", "Copy friends", "None"], ans: 0 },
+    { q: "A breathing exercise can...", opts: ["Reduce stress", "Increase stress", "Make money", "None"], ans: 0 },
+    { q: "Stop revenge trading means...", opts: ["Ignore Plan", "Trade faster", "Trade calmly", "None"], ans: 2 },
+    { q: "Recognizing triggers helps...", opts: ["Control emotions", "Lose more money", "Make friends", "None"], ans: 0 }
+  ]
+};
+

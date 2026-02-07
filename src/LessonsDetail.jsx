@@ -11,10 +11,12 @@ const LessonsDetail = () => {
   const [finished, setFinished] = useState(false);
 
   const questions = [
-    { q: "Risk per trade should ideally be...", opts: ["1-2%", "50%", "10%", "All in"], ans: 0 },
+    { q: "Risk per trade should ideally be...", opts: ["10%", "50%", "1-2%", "All in"], ans: 2 },
     { q: "A Stop Loss protects you from...", opts: ["Profit", "Unlimited Loss", "Taxes", "Winning"], ans: 1 },
-    { q: "MeBao turns Orange when the market is...", opts: ["Volatile", "Closed", "Boring", "Flat"], ans: 0 }
-  ];
+    { q: "Leverage increases...", opts: ["Profit only", "Risk only", "Both profit and risk", "Nothing"], ans: 2 },
+    { q: "Position sizing depends on...", opts: ["Account size", "Risk tolerance", "Mood", "Both"], ans: 3 },
+    { q: "Diversifying trades helps to...", opts: ["Increase risk", "Reduce risk", "Make gambling fun", "None"], ans: 1 }
+];
 
   const handleAnswer = (idx) => {
     if (idx === questions[currentQ].ans) setScore(s => s + 1);
@@ -29,8 +31,8 @@ const LessonsDetail = () => {
       {!quizMode ? (
         <div className="content-container">
           <header>
-            <span className="category">Psychology</span>
-            <h1>Managing Your Emotions</h1>
+            <span className="category">Trading Lessons</span>
+            <h1>Widen Up Your Knowledge!</h1>
           </header>
           
           <div className="prose glass-card">
@@ -42,8 +44,8 @@ const LessonsDetail = () => {
                <p>MeBao helps you stay in the <strong>Robot Phase</strong> – calm and logical.</p>
             </div>
 
-            <h3>MeBao Doll Integration</h3>
-            <p>Your doll will pulse <strong>Blue</strong> when you are trading too fast. This is a reminder to breathe and re-evaluate your setup.</p>
+            <h3>MeBao - AI-Powered Trading Companion</h3>
+            <p>This AI companion supports you whenever you need guidance in your trading journey.</p>
             
             <button onClick={() => setQuizMode(true)} className="neon-btn-purple start-quiz">Start Assessment Quiz</button>
           </div>
@@ -52,7 +54,7 @@ const LessonsDetail = () => {
         <div className="quiz-finished glass-card">
           <h2>Level Complete! 🎊</h2>
           <div className="score-circle">{score}/{questions.length}</div>
-          <p>MeBao is glowing Gold! You've unlocked the next tier of trading knowledge.</p>
+          <p>MeBao is proud of you! You've unlocked the next tier of trading knowledge.</p>
           <Link to="/lessons" className="neon-btn-pink">Return to Roadmap</Link>
         </div>
       ) : (
